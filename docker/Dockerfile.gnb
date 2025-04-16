@@ -46,11 +46,8 @@ COPY config/oai /oai/config/oai
 # Set default working directory
 WORKDIR /oai/cmake_targets/ran_build/build
 
-# Default server address (can be overridden when running the container)
-ENV RF_SIMULATOR_SERVER="oai-ue"
-
 # For debugging: Use shell as entrypoint
 ENTRYPOINT ["/bin/bash"]
 
 # Original entrypoint (commented out for debugging)
-# ENTRYPOINT ["./nr-softmodem", "-O", "/oai/config/oai/gnb.sa.band78.fr1.106PRB.usrpb210.conf", "--rfsim", "--rfsimulator.serveraddr", "${RF_SIMULATOR_SERVER}"]
+# ENTRYPOINT ["./nr-softmodem", "-O", "/oai/config/oai/gnb.sa.band78.fr1.106PRB.usrpb210.conf", "--rfsim", "--rfsimulator.serveraddr", "server"]
