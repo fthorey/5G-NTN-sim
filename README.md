@@ -6,37 +6,48 @@ This project uses OpenAirInterface (OAI) with RF simulator for 5G NTN simulation
 
 - Docker installed on your system
 - Git
+- Waf build system (included in the repository)
 
 ## Building the Docker Images
 
-### gNB Image
+The project uses Waf as its build system. Available commands:
+
+### Build Commands
 ```bash
-docker build -t oai-gnb -f docker/Dockerfile.gnb .
+# Build gNB image
+./waf build_gnb
+
+# Build UE image
+./waf build_ue
+
+# Build both images
+./waf build_all
 ```
 
-### UE Image
+### Run Commands
 ```bash
-docker build -t oai-ue -f docker/Dockerfile.ue .
+# Run gNB container
+./waf run_gnb
+
+# Run UE container
+./waf run_ue
+
+# Run both containers
+./waf run_all
 ```
 
-## Setting Up the Network
-
-Create a Docker network for gNB and UE communication:
+### Network Management
 ```bash
-docker network create oai-net
+# Create the Docker network (automatically done by run commands)
+./waf create_network
 ```
 
-## Running the Containers
+## Notes
 
-### gNB Container
-```bash
-docker run -it --rm --network oai-net --name oai-gnb oai-gnb
-```
-
-### UE Container
-```bash
-docker run -it --rm --network oai-net --name oai-ue oai-ue
-```
+- Both containers are configured to automatically remove themselves when stopped (`--rm` flag)
+- The containers communicate over the `oai-net` Docker network
+- Container names are used for DNS resolution within the network
+- Press Ctrl+C to gracefully stop and clean up containers
 
 ## Project Structure
 
@@ -46,20 +57,7 @@ docker run -it --rm --network oai-net --name oai-ue oai-ue
 │   ├── Dockerfile.gnb
 │   ├── Dockerfile.ue
 │   ├── .dockerignore
-│   └── env
+├── waf                 # Waf build system
+├── wscript            # Build configuration
 └── README.md
 ```
-
-## Environment Variables
-
-### gNB Container
-- `RF_SIMULATOR_SERVER`: Address of the UE container (default: "oai-ue")
-
-### UE Container
-- `RF_SIMULATOR_SERVER`: Address of the gNB container (default: "oai-gnb")
-
-## Notes
-
-- Both containers are configured to automatically remove themselves when stopped (`--rm` flag)
-- The containers communicate over the `oai-net` Docker network
-- Container names are used for DNS resolution within the network 
