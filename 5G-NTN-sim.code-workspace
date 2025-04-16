@@ -1,24 +1,11 @@
 {
-    "folders": [
-        {
-            "path": "."
-        }
-    ],
-    "settings": {
-        "files.exclude": {
-            "**/.git": true,
-            "**/.svn": true,
-            "**/.hg": true,
-            "**/CVS": true,
-            "**/.DS_Store": true,
-            "**/Thumbs.db": true,
-            "**/node_modules": true
-        },
-        "docker.containers": {
-            "autoRemove": true
-        },
-        "docker.volumes": {
-            "autoRemove": true
-        }
-    }
-} 
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../openairinterface5g"
+		}
+	],
+	"settings": {}
+}
