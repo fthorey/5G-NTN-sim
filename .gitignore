@@ -1,0 +1,8 @@
+# Waf build system
+.waf-*
+waf-*
+wscript_build
+.waf3-*
+.waf3
+.waf3-*
+.waf3_build 
