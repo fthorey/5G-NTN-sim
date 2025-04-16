@@ -54,4 +54,4 @@ WORKDIR /oai/cmake_targets/ran_build/build
 # - absoluteFrequencySSB: 641280 (NR-ARFCN)
 # - tracking_area_code: 1
 # - plmn: mcc=001, mnc=01
-ENTRYPOINT ["./nr-softmodem", "-O", "/oai/config/oai/gnb.sa.band78.fr1.106PRB.usrpb210.conf", "--rfsim", "--rfsimulator.serveraddr", "server"]
+ENTRYPOINT ["./nr-softmodem", "-O", "/oai/config/oai/gnb.sa.band78.fr1.106PRB.usrpb210.conf", "--gNBs.[0].min_rxtxtime", "6", "--rfsim", "--rfsimulator.serveraddr", "server"]

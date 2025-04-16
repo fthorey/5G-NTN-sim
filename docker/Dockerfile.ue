@@ -49,4 +49,4 @@ WORKDIR /oai/cmake_targets/ran_build/build
 # - band 78 (3.5GHz)
 # - center frequency 3619200000 Hz
 # - standalone mode
-ENTRYPOINT ["./nr-uesoftmodem", "-r", "106", "--numerology", "1", "--band", "78", "-C", "3619200000", "--rfsim", "--sa", "--rfsimulator.serveraddr", "oai-gnb"]
+ENTRYPOINT ["./nr-uesoftmodem", "-C", "3619200000", "-r", "106", "--numerology", "1", "--ssb", "516", "--rfsim", "--rfsimulator.serveraddr", "oai-gnb"]
