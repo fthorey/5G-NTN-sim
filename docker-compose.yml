@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  gnb:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.gnb
+    container_name: oai-gnb
+    networks:
+      - oai-net
+
+  ue:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.ue
+    container_name: oai-ue
+    networks:
+      - oai-net
+    depends_on:
+      - gnb
+
+networks:
+  oai-net:
+    name: oai-net
