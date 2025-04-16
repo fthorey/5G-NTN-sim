@@ -1,0 +1,41 @@
+# Git
+.git
+.gitignore
+
+# Docker
+docker/*
+!docker/env
+
+# Build artifacts
+*.o
+*.so
+*.a
+build/
+cmake_targets/build/
+
+# Editor files
+.vscode/
+.idea/
+
+# Logs and databases
+*.log
+*.sqlite
+
+# Environment files
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env/
+.venv/
+
+# Workspace
+workspace/*
+!workspace/.gitkeep 

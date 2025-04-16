@@ -1,0 +1,53 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Paris
+
+RUN apt-get update && \
+    apt-get install -y \
+    git \
+    cmake \
+    build-essential \
+    python3 \
+    python3-pip \
+    libfftw3-dev \
+    libconfig-dev \
+    libsctp-dev \
+    iproute2 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create working directory
+WORKDIR /oai
+
+# Clone and build yaml-cpp from source
+RUN git clone https://github.com/jbeder/yaml-cpp.git && \
+    cd yaml-cpp && \
+    mkdir build && \
+    cd build && \
+    cmake -DYAML_BUILD_SHARED_LIBS=ON -DYAML_CPP_BUILD_TESTS=OFF .. && \
+    make -j$(nproc) && \
+    make install && \
+    ldconfig
+
+# Clean up and clone OAI
+RUN rm -rf * .[^.] .??* && \
+    git clone https://github.com/OPENAIRINTERFACE/openairinterface5g.git .
+
+# Build OAI dependencies
+RUN ./cmake_targets/build_oai -I -w SIMU
+
+# Build OAI gNB (for RF simulator)
+RUN ./cmake_targets/build_oai --gNB -w SIMU
+
+# Set default working directory
+WORKDIR /oai/cmake_targets/ran_build/build
+
+# Default server address (can be overridden when running the container)
+ENV RF_SIMULATOR_SERVER="oai-ue"
+
+# For debugging: Use shell as entrypoint
+ENTRYPOINT ["/bin/bash"]
+
+# Original entrypoint (commented out for debugging)
+# ENTRYPOINT ["./nr-softmodem", "-O", "../../../targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf", "--rfsim", "--rfsimulator.serveraddr", "${RF_SIMULATOR_SERVER}"]
