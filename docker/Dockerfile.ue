@@ -43,11 +43,10 @@ RUN ./cmake_targets/build_oai --nrUE -w SIMU
 # Set default working directory
 WORKDIR /oai/cmake_targets/ran_build/build
 
-# Default server address (can be overridden when running the container)
-ENV RF_SIMULATOR_SERVER="oai-gnb"
-
-# For debugging: Use shell as entrypoint
-ENTRYPOINT ["/bin/bash"]
-
-# Original entrypoint (commented out for debugging)
-# ENTRYPOINT ["./nr-uesoftmodem", "-O", "../../../targets/PROJECTS/GENERIC-NR-5GC/CONF/ue.conf", "--rfsim", "--rfsimulator.serveraddr", "${RF_SIMULATOR_SERVER}"] 
+# UE configuration with RF simulator:
+# - 106 resource blocks
+# - numerology 1 (30kHz subcarrier spacing)
+# - band 78 (3.5GHz)
+# - center frequency 3619200000 Hz
+# - standalone mode
+ENTRYPOINT ["./nr-uesoftmodem", "-r", "106", "--numerology", "1", "--band", "78", "-C", "3619200000", "--rfsim", "--sa", "--rfsimulator.serveraddr", "oai-gnb"]

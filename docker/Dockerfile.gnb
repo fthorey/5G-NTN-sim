@@ -46,5 +46,12 @@ COPY config/oai /oai/config/oai
 # Set default working directory
 WORKDIR /oai/cmake_targets/ran_build/build
 
-# Start the gNB with RF simulator configuration
-ENTRYPOINT ["./nr-softmodem", "-O", "/oai/config/oai/gnb.sa.band78.fr1.106PRB.usrpb210.conf", "--rfsim", "--rfsimulator.serveraddr", "server"]
+# gNB configuration parameters:
+# - band 78 (3.5GHz)
+# - numerology 1 (30kHz subcarrier spacing)
+# - 106 resource blocks
+# - absoluteFrequencyPointA: 640008 (NR-ARFCN)
+# - absoluteFrequencySSB: 641280 (NR-ARFCN)
+# - tracking_area_code: 1
+# - plmn: mcc=001, mnc=01
+ENTRYPOINT ["./nr-softmodem", "-O", "/oai/config/oai/gnb.sa.band78.fr1.106PRB.usrpb210.conf", "--rfsim", "--rfsimulator.serveraddr", "oai-gnb"]
