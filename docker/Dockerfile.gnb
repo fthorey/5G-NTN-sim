@@ -40,6 +40,9 @@ RUN ./cmake_targets/build_oai -I -w SIMU
 # Build OAI gNB (for RF simulator)
 RUN ./cmake_targets/build_oai --gNB -w SIMU
 
+# Copy configuration files
+COPY config/oai /oai/config/oai
+
 # Set default working directory
 WORKDIR /oai/cmake_targets/ran_build/build
 
@@ -50,4 +53,4 @@ ENV RF_SIMULATOR_SERVER="oai-ue"
 ENTRYPOINT ["/bin/bash"]
 
 # Original entrypoint (commented out for debugging)
-# ENTRYPOINT ["./nr-softmodem", "-O", "../../../targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf", "--rfsim", "--rfsimulator.serveraddr", "${RF_SIMULATOR_SERVER}"]
+# ENTRYPOINT ["./nr-softmodem", "-O", "/oai/config/oai/gnb.sa.band78.fr1.106PRB.usrpb210.conf", "--rfsim", "--rfsimulator.serveraddr", "${RF_SIMULATOR_SERVER}"]
